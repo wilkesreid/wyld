@@ -19,13 +19,15 @@ This library is named after [James Wyld](https://en.wikipedia.org/wiki/James_Wyl
 
 ## Installation
 
-You can use any of the following Javascript package managers to install Wyld.
+~~You can use any of the following Javascript package managers to install Wyld.~~
 
-`npm install wyld`
+~~`npm install wyld`~~
 
-`bower install wyld`
+~~`bower install wyld`~~
 
-`yarn add wyld`
+~~`yarn add wyld`~~
+
+Hopefully this tool will be available via all these package managers soon. In the mean time, you can manually download `wyld.js` directly from Github.
 
 ## Usage
 
