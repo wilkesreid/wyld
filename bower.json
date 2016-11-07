@@ -1,0 +1,23 @@
+{
+  "name": "wyld",
+  "description": "Wyld is a lightweight Javascript library that allows you to easily create input-output mappings.",
+  "main": "src/wyld.js",
+  "authors": [
+    "Samuel Reid"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/wilkesreid/wyld",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "version": "1.0.0",
+  "repository": {
+    "url": "git+https://github.com/wilkesreid/wyld.git",
+    "type": "git"
+  },
+  "author": "Samuel Reid"
+}
