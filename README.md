@@ -83,7 +83,7 @@ map.get(2); // returns 5
 
 The conditions supported are greater than `>`, less than `<`, greater than or equal to `>=`, and less than or equal to `<=`.
 
-There ~~are two ways~~ is only one currently implemented way to evaluate multiple conditions at once. Use a single `&` operator to separate conditions.
+There are two ways to evaluate multiple conditions at once. The first is to use a single `&` operator to separate conditions.
 
 ```
 var map = Wyld.Map({
@@ -92,16 +92,16 @@ var map = Wyld.Map({
 map.get(7); // returns 20
 ```
 
-An easier to read way would be to put a dollar sign `$` in the key to represent the input and surround it with the conditions. This will be implemented soon.
+The second way is to put a dollar sign `$` in the key to represent the input and surround it with the conditions.
 
 ```
 var map = Wyld.Map({
-  '5<$<10': 20, // not yet implemented
+  '5<$<10': 20,
 });
 map.get(7); // returns 20
 ```
 
-The string `5<$<10` reads `if the input is greater than five and less than 10`.
+The string `5<$<10` reads `if five is less than the input and the input is less than ten`.
 
 ### Calculated
 

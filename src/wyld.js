@@ -1,14 +1,31 @@
 (function() {
   function Map(map) {
 
+    // Pattern for getting tokens out of a condition
+    var pattern = /^(<|>|<=|>=)(-?[0-9]+)(?:\&(<|>|<=|>=)(-?[0-9]+))?|(-?[0-9]+)(<|>|<=|>=)\$(<|>|<=|>=)(-?[0-9]+)$/;
+
     /*
     Check if string contains one or more conditions.
     */
     function hasCondition(str) {
-      if (str.indexOf("&") > -1) {
+      if (pattern.test(str)) {
         return true;
       }
     }
+
+    /*
+    Compare input with output given a string comparator
+    */
+    function compare(a, cmp, b) {
+      switch (cmp) {
+        case '>': return a > b; break;
+        case '<': return a < b; break;
+        case '>=': return a >= b; break;
+        case '<=': return a <= b; break;
+        default: return false;
+      }
+    }
+
     /*
     When given a string that possibly contains
     one or more conditions, evaluate them.
@@ -19,79 +36,42 @@
         return output;
       }
 
-      // Check for multiple conditions
-      if (str.indexOf("&") == -1 ) {
-        // There is only one condition
+      var tokens = str.match(pattern);
 
-        // Get operator, if it exists
-        var operator = str.match(/[><=]+/)
-
-        // Check if we found an operator at all
-        if (operator.length > 0) {
-          operator = operator[0];
-        } else {
-          return null;
-        }
-
-        var value = parseInt(str.substring(operator.length));
-
-        // Check condition based on operator
-        switch(operator) {
-          case '>':
-            if (input > value) return output;
-          break;
-          case '<':
-            if (input < value) return output;
-          break;
-          case '>=':
-            if (input >= value) return output;
-          break;
-          case '<=':
-            if (input <= value) return output;
-          break;
-        }
-
-        // If we got to this point, then the condition failed
+      // Check if there is a condition at all
+      if (tokens === null) {
+        // There is no condition
         return null;
+      }
 
-      } else {
-        // There are multiple conditions
+      // There is at least one condition
 
-        var conditions = str.split("&");
-
-        // Assume all conditions are satisfied
-        // until one is proven false
-        var all_satisfied = true;
-
-        // Loop through conditions in this string
-        for (i=0;i<conditions.length;i++) {
-
-          var rule = conditions[i];
-          var operator = rule.match(/[><=]+/)[0];
-          var value = parseInt(rule.substring(operator.length));
-
-          // Check condition based on operator
-          switch(operator) {
-            case '>':
-              if (input <= value) all_satisfied = false;
-            break;
-            case '<':
-              if (input >= value) all_satisfied = false;
-            break;
-            case '>=':
-              if (input < value) all_satisfied = false;
-            break;
-            case '<=':
-              if (input > value) all_satisfied = false;
-            break;
-          }
-        }
-
-        // If all conditions in string were satisfied
-        if (all_satisfied) {
+      // Check if this is a dollar sign condition
+      if (tokens[5] !== undefined) {
+        // This is a dollar sign condition
+        if (compare(parseInt(tokens[5]), tokens[6], input) && compare(input, tokens[7], parseInt(tokens[8]))) {
           return output;
         } else {
           return null;
+        }
+      } else {
+        // This is not a dollar sign condition
+
+        // Check if this is two conditions separated by an '&'
+        if (tokens[3] !== undefined) {
+          // This is two conditions separated by an '&'
+          if (compare(input, tokens[1], parseInt(tokens[2])) && compare(input, tokens[3], parseInt(tokens[4]))) {
+            return output;
+          } else {
+            return null;
+          }
+        } else {
+          // There is only one condition
+          if (compare(input, tokens[1], parseInt(tokens[2]))) {
+            return output;
+          } else {
+            return null;
+          }
         }
       }
     }

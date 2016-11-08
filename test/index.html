@@ -3,11 +3,9 @@
   <script src="../src/wyld.js"></script>
   <script defer>
   var map = Wyld.Map({
-    '>5': 10,
-    '<10': 1,
-
-    '>20': 100,
-    '>50': 500
+    '5<$<10': function(num) {
+      return ((num-5)/2)+5;
+    }
   });
   function process(el) {
     document.getElementById("output").innerHTML = map.get(el.value);
@@ -17,5 +15,8 @@
 <body>
   <div id="output">0</div>
   <input type="number" oninput="process(this)" value="0">
+  <script>
+  process(document.getElementsByTagName("input")[0]);
+  </script>
 </body>
 </html>
