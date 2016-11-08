@@ -63,7 +63,7 @@ var map = Wyld.Map({
   5: 10,
   5: 50
 });
-map.get(5); // returns 5
+map.get(5); // returns 50
 ```
 
 ### Conditional
